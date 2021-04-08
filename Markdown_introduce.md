@@ -370,7 +370,7 @@ This is really***very***important text.
 >
 >       printf("Hello world!\n");
 >
-> 신기한 **명언**들이 많네요.  
+> 신기한 **명언**들이 많네요!  
 ```
 
 - 출력 결과는 아래와 같다.  
