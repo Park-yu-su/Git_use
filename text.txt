@@ -5,3 +5,6 @@ Hello world
 2차 추가 commit
 
 master branch에 merge 완료 후 수정을 해봅니다.
+이제 Markdown 수정이 완료된 것 같습니다.
+
+수고하셨습니다.
