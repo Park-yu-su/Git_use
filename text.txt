@@ -3,3 +3,5 @@ Hello world
 태그는 일종의 커밋의 책갈피 역할입니다.
 1차 추가 commit
 2차 추가 commit
+
+master branch에 merge 완료 후 수정을 해봅니다.
