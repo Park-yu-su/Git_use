@@ -239,6 +239,8 @@ git status
 git commit -m "커밋 메시지"
 ```
 
+
+한 번 "1st commit"이라는 이름으로 커밋을 만들어 보도록 합시다!
 > <결과>
 >
 > ![커밋 결과](https://user-images.githubusercontent.com/57581969/114133458-0faf4200-9941-11eb-8895-d36c462b7c00.jpg)
@@ -246,8 +248,8 @@ git commit -m "커밋 메시지"
 > - 위는 여태까지 스태이징 된 파일들을 "1st commit"이라는 이름으로 커밋해 로컬 저장소에 반영하는 과정입니다. 
 
 　  
-
-commit을 완료한 후에 git status를 통해 커밋 상황을 보면 
+     
+이제 commit을 완료한 후에 git status를 통해 커밋 상황을 보면 
 
 ![commit 후 status](https://user-images.githubusercontent.com/57581969/114133770-877d6c80-9941-11eb-9d7e-72f5187f18f0.PNG)
 
@@ -262,6 +264,8 @@ commit을 완료한 후에 git status를 통해 커밋 상황을 보면
 
 ## 6) push
 
+---
+
 이제 여러분은 git의 가장 큰 존재 의의라고 할 수 있는 commit을 완료한 상태입니다. 하지만 commit을 통해 로컬 저장소에 변경 기록을 반영했지만, **github 등의 외부 저장소는 이를 알 길이 없습니다.** 다른 사람들에게 코드를 보여주려면 외부 저장소에도 이 반영 결과를 적용해 주어야 하는데, 그럼 어떻게 해야 할까요?  
 
 이 때 사용하는 것이 바로 `git push` 입니다.
@@ -272,6 +276,9 @@ git push <저장소명> <브랜치명>
 
 저장소명은 아까 `git remote`를 통해 설정하였고(여기서는 origin),  브랜치명은 현재 우리가 수정을 진행한 브랜치명(여기서는 master)을 입력하면 됩니다.
 
+　  
+
+한 번 아까 로컬 저장소에 커밋한 "lst commit"을 외부 저장소에 push해 봅시다!
 > <결과>
 > 
 > ![bandicam 2021-04-08 18-26-25-454](https://user-images.githubusercontent.com/57581969/114134777-3bcbc280-9943-11eb-87cf-9865dd2c30bb.jpg)
@@ -292,3 +299,155 @@ unstage된 파일 -> Staging Area에 올리기 -> stage 된 파일을 commit 하
 ```
 
 ## 7) log
+
+---
+
+이제 여러분은 위에서 배운 것을 응용하여 토대로 몇 번 파일을 수정하여 로컬저장소에 커밋하고, 외부저장소에 푸시하였다고 가정해봅시다. 그런데 커밋을 올리던 도중, **내가 무엇을 수정하여 무슨 이름으로 커밋**을 했는지 **히스토리**를 보고 싶을 때가 있습니다.
+
+이 때, git의 히스토리를 조회하는 명령어인 `git log`가 있습니다.
+
+```
+git log
+```
+
+> <결과>
+> 
+> ![로그](https://user-images.githubusercontent.com/57581969/114825062-b17ed500-9e00-11eb-8b76-5048bc42325d.jpg)
+> 
+> - 위처럼 커밋 히스토리를 통해 처음에 한 1st commit에 이어 2nd commit까지 총 **2개**의 커밋을 진행한 것을 알 수 있습니다.
+>
+
+git log는 원하는 커밋의 히스토리에 접근하는 기능을 가진 만큼 다양한 옵션이 존재합니다. 하지만 그 중 잘 쓰이는 옵션이라 하면 **각 커밋에서의 변경 사항**이라고 할 수 있습니다.  
+
+각 커밋에서 무엇이 변경되었는지 확인하는 log의 옵션은 `-p`로 
+```
+git log -p
+```
+와 같이 입력하면 됩니다.
+
+> <결과>
+> 
+> ![로그 dif](https://user-images.githubusercontent.com/57581969/114825667-7c26b700-9e01-11eb-9317-da4e1f450510.jpg)
+>
+> - 이전과 달리 diff와 함께 Markdown_introduce.md 파일에서 문자가 변경되었다는 점을 알려주고 있습니다.
+> 
+
+이제 여러분은 `git log`를 통해 이전에 커밋한 내용을 하나하나 기억할 필요없이 쉽게 조회할 수 있게 되었습니다!  
+또한, 여러분은 `git log`의 커밋 이력을 통해, 깃을 이용한 버전관리를 활용할 준비가 되었습니다!
+
+## 8) reset
+
+---
+
+지금까지 총 2개의 커밋(1st commit, 2nd commit)을 진행한 것에 이어, 여러분은 계속 파일을 수정해가며 커밋을 진행했다고 가정해봅시다.  
+아뿔싸! 그런데, `git log`를 통해 커밋 이력을 보던 중 **중간에 잘못 수정하고 커밋한 것을 알게 되었고, 이전에 수정하여 커밋한 부분으로 돌아가고** 싶어졌습니다.
+
+이럴 때 일일히 코드를 변경하지 않고, 이전의 커밋으로 돌아갈 수 있는 명령어가 있습니다!  
+바로 `git reset`입니다.
+
+```
+git reset <돌아가고 싶은 커밋>
+```
+
+<돌아가고 싶은 커밋> 부분에는 **커밋**을 작성하거나 **HEAD^, HEAD~2** 등 가장 최신 커밋을 기준으로 상대적 경로를 넣어줄 수 있습니다.
+
+```
+git reset 8d70e6f801941af4829f2945ae1f8153ec533e3c    <- wrong commit으로 돌아가자(wrong commit 입력)
+git reset HEAD^                                       <- 현재 바로 이전 커밋으로 돌아가자
+git reset HEAD~2                                      <- 현재에서 2개 전 커밋으로 돌아가자
+```
+
+　
+
+reset의 과정은 한 번에 이해하긴 힘드므로 사진과 함께 과정을 살펴봅시다!  
+![잘못](https://user-images.githubusercontent.com/57581969/114827517-bf822500-9e03-11eb-9264-6f81005c10e3.jpg)
+
+사진과 같이 현재 총 4개의 커밋이 있고, **wrong commit2**가 최신 커밋인 것을 알 수 있습니다.
+
+　
+
+이를 간단하게 표현하면 아래와 같습니다.
+```
+                                             HEAD(master)
+                                                 |
+1st commit <- 2nd commit <- wrong commit <- wrong commit2
+```
+
+여기서 `git reset`을 입력하면 입력한 커밋으로 **HEAD를 이동시킵니다.**  
+만약 wrong commit으로 이동한다고 가정하면  
+
+```
+                             HEAD(master)
+                                 |
+1st commit <- 2nd commit <- wrong commit <- wrong commit2
+```
+으로 이동한 것을 알 수 있습니다.
+
+　
+
+> <결과>
+> 
+> ![reset](https://user-images.githubusercontent.com/57581969/114829641-4d5f0f80-9e06-11eb-80fe-534c813feaeb.jpg)
+> 
+> - HEAD^ (바로 이전 커밋으로 이동)으로 reset한 결과, git log을 통해 wrong commit2의 이전 커밋인 wrong commit으로 이동한 것을 볼 수 있습니다. 
+> 
+
+그런데, git reset은 이전 기록들을 이동하는 만큼 매우 민감하기 때문에, 여러 옵션이 존재합니다.  
+```
+git reset <옵션> <돌아가고 싶은 커밋>
+```
+총 3가지 옵션인 **--soft, --mixed, --hard**가 존재하는데, 간단히 알아봅시다!
+
+### 8.1) --soft
+
+---
+
+git reset --soft는 쉽게 설명하면, 돌아가려했던 커밋으로는 돌아가지만, 그 이후 커밋은 지워지지 않습니다.  
+
+만약 `git reset --soft`를 이용해 wrong commit2에서 2nd commit으로 이동한다면
+```
+            HEAD(master)
+                  |
+1st commit <- 2nd commit <- wrong commit <- wrong commit2
+```
+라고 볼 수 있습니다. 
+
+
+### 8.2) --mixed
+
+---
+
+만약 아까처럼 `git reset HEAD^`처럼 따로 옵션을 적지 않으면 `git reset`은 mixed 옵션으로 동작하게 됩니다.  
+mixed도 실행하면 가리키는 이동하고 싶은 커밋으로 되돌립니다. 즉, commit 명령과 add 명령을 전부 되돌리는 기능입니다.
+
+만약 `git reset --mixed`를 이용해 wrong commit2에서 2nd commit으로 이동한다면
+```
+            HEAD(master)
+                  |
+1st commit <- 2nd commit         X ~~wrong commit <- wrong commit2(삭제됨)~~
+```
+라고 볼 수 있습니다. 
+
+### 8.3) --hard
+
+---
+
+git reset --hard는 쉽게 설명하면, 돌아간 이력 이후의 모든 커밋 내용을 지워버리고 실제 working directory에 있는 부분까지 지워버리는 역할을 합니다.  
+
+만약 `git reset --hard`를 이용해 wrong commit2에서 2nd commit으로 이동한다면
+```
+            HEAD(master)
+                  |
+1st commit <- 2nd commit
+```
+라고 볼 수 있습니다. 
+
+이 옵션을 사용하면 **워킹 디렉토리의 파일까지 강제로 덮어쓰기 때문에, soft, mixed 옵션과 달리 Git에 저장된 데이터를 실제로 삭제**하므로 사용에 주의를 해야 합니다.
+
+![bandicam 2021-04-08 18-58-50-394](https://user-images.githubusercontent.com/57581969/114830953-c6ab3200-9e07-11eb-82e7-85bc1badd979.jpg)
+
+
+## 9) branch, checkout
+
+---
+
