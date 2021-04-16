@@ -491,6 +491,8 @@ git branch <생성할 브랜치 이름>
 > 
 > ![브랜치 생성](https://user-images.githubusercontent.com/57581969/114836165-53a4ba00-9e0d-11eb-83e2-9a7bdc110bd8.jpg)
 >
+> - `git branch plustxt`를 통해 plustxt 브랜치를 생성한 것을 확인할 수 있습니다.
+> 
 > - `git branch`만 입력하면 현재 존재하는 브랜치를 출력하고, `git branch <생성 브랜치 이름>`을 입력하고 `git branch`를 입력하면 브랜치가 추가된 것을 볼 수 있습니다.
 > 
 
@@ -518,6 +520,9 @@ git branch -m <변경할 브랜치의 기존 이름> <변경할 새 이름>
 > <결과>
 > 
 > ![bandicam 2021-04-08 19-08-09-499](https://user-images.githubusercontent.com/57581969/114836843-04ab5480-9e0e-11eb-96cd-3aae56487638.jpg)
+> 
+> - plustxt 브랜치가 addtxt 브랜치로 변경된 것을 알 수 있습니다.
+>
 
 ### 주의할 점
 
@@ -687,4 +692,116 @@ git show
 
 ---
 
+이제 여러분은 브랜치를 나누어 master 브랜치에서는 Markdown 프로젝트를 진행하고, addtxt 브랜치에서는 text.txt파일을 만들어 txt파일을 수정하고 각 브랜치에 커밋을 반영한 상황입니다. 그리고 txt파일 수정이 끝난 지금, 여러분은 **addtxt 브랜치에 있는 txt파일을 master 브랜치에 옮기고 싶다고** 가정해봅시다.  
 
+현재 상황을 보면 master 브랜치에서 addtxt 브랜치를 파생한 후 각자의 브랜치에게 몇 번의 커밋을 진행했습니다.
+
+```
+master--------- Markdown 수정 ----- 마크다운 수정2
+          |
+        addtxt -------- txt파일 수정 ----------------txt파일 수정2
+
+```
+즉, 이렇게 **2갈래 나누어진 브랜치를 다시 하나의 갈래로 합쳐야** 할 필요가 있습니다.
+
+　  
+
+이럴 때 사용하는 명령어가 `git merge`입니다.
+
+```
+git merge <합칠 브랜치 이름>
+```
+
+하지만 위 명령어를 치기 전에 merge가 적용될 브랜치를 잘 확인해야 합니다.  
+현재 목표는 **addtxt 브랜치를 master 브랜치와 합치는 것** 이기 때문에, 먼저 결과가 적용될 **master 브랜치로 이동** 하고 `git merge addtxt`를 사용해야 합니다.  
+
+```
+master--------- Markdown 수정 ----- Markdown 수정2 ------------------------- Commit
+          |                                                |
+        addtxt -------- txt파일 수정 ----------------txt파일 수정2
+```
+
+> <결과>
+> 
+> ![bandicam 2021-04-08 20-41-19-553](https://user-images.githubusercontent.com/57581969/114977062-06365480-9ec2-11eb-892e-52e4de6ac9f5.jpg)
+>
+> - 브랜치를 옮긴 후, `git merge addtxt`를 실행하면 merge가 완료된 것을 볼 수 있습니다.
+> 
+> ![bandicam 2021-04-08 20-47-10-816](https://user-images.githubusercontent.com/57581969/114977239-501f3a80-9ec2-11eb-8d49-f8bc2a633744.jpg)
+>
+> - 그 후 master 브랜치에서 text.txt파일이 생성된 것을 볼 수 있고, master 브랜치에서 커밋이 정상적으로 진행되는 것을 볼 수 있습니다. 
+> 
+
+
+## 13) rebase
+
+---
+
+이제 merge를 통해 txt파일을 master 브랜치에 옮긴 후, 여러분은 Markdown을 열심히 수정해 프로젝트를 거의 다 끝낸 상황입니다.  
+그런데 markdown 파일을 급하게 수정해야 하는 상황이 벌어졌고, 이에 여러분은 새로운 브랜치인 Fixmark 브랜치를 파서 markdown 파일을 수정하기 시작했다고 가정해봅시다. 
+
+![bandicam 2021-04-08 20-57-15-663](https://user-images.githubusercontent.com/57581969/114978453-2cf58a80-9ec4-11eb-9dbb-f411ea4ac5ee.jpg)
+
+ - Fixmark 브랜치를 생성하여 Markdown 파일 수정 진행
+
+그리고 master 브랜치에서는 보고서를 작성하기 위해 READMD.md 파일을 수정하기 시작했습니다. 
+
+![bandicam 2021-04-08 21-31-01-501](https://user-images.githubusercontent.com/57581969/114978645-7219bc80-9ec4-11eb-9846-5d4a1f01197f.jpg)
+
+ - master 브랜치로 돌아와서 README.md 파일 수정 진행
+
+그 후, markdown 수정이 최종적으로 끝나서 이제 **Fixmark 브랜치에 있는 markdown 최종 수정본을 보고서를 작성중인 master 브랜치와 합치고 싶어졌습니다.**
+
+```
+<현 브랜치 상황>
+
+master--------- 보고서 작성중1 ----- 보고서 작성중2 --------
+          |                                                
+        Fixmark ---- Markdown 1차 수정 ---- Markdown 1차 수정 ---- Markdown 최종 수정
+```
+
+물론 여러분은 이전에 배운 `merge`를 이용해 브랜치를 합칠 수 있겠지만, 이번에는 다른 방법을 사용해 볼 것입니다.
+
+　  
+
+바로 `git rebase` 명령어입니다.
+
+```
+git rebase <합칠 브랜치 이름>
+```
+
+`git rebase`는 `git merge`하고 비슷한 결과를 보여줍니다. `git rabase`를 사용하면 **한 브랜치에서 변경된 사항을 다른 브랜치에 적용할 수 있습니다.**  
+
+　  
+
+과정을 설명하면 아래와 같습니다.
+
+1. 두 브랜치(master, Fixmark)가 나뉘기 전인 공통 커밋으로 이동한다. 
+2. 그 커밋부터 새 브랜치가 가리키는 커밋까지의 변경 사항을 임시로 저장한다.
+3. Rebase 할 브랜치(Fixmark)가 합칠 브랜치(master)를 가리키게 하고, 아까 저장해 놓았던 변경사항을 차례대로 적용한다.
+
+　  
+
+> <결과>
+> 
+> ![bandicam 2021-04-08 21-48-24-605](https://user-images.githubusercontent.com/57581969/114979451-d7ba7880-9ec5-11eb-9305-cc054e96c363.jpg)
+
+rebase를 완료한 후  `git merge`를 통해 Fixmark 브랜치의 변경사항을 master에 적용하면 rebase가 완료됩니다.
+
+> <결과>
+> 
+> ![bandicam 2021-04-08 21-49-06-744](https://user-images.githubusercontent.com/57581969/114979619-2ff17a80-9ec6-11eb-94ab-ab0263e06781.jpg)
+
+　  
+
+rebase 결과를 브랜치로 간단히 표현하면 아래와 같습니다.  
+
+```
+master--------- 보고서 작성중1 ---- 보고서 작성중2 ---- [Markdown 1차 수정 ---- Markdown 1차 수정 ---- Markdown 최종 수정]
+          |                                                
+        Fixmark ---- [Markdown 1차 수정 ---- Markdown 1차 수정 ---- Markdown 최종 수정] <- 여기까지를 복사해 master에 적용한다.
+```
+
+## 14) clone
+
+---
