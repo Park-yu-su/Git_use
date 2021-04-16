@@ -862,19 +862,19 @@ git clone을 사용하는 방법은 아래와 같습니다.
 
 | **사용 명령어** | **사용 여부** | **해당 명령어 설명 링크** |
 | :-: | :-: | :-: |
-| add | [O] | [git add](##-**4)-add, status**) |
-| branch | [O] | [git branch](##-**9)-branch,-checkout**) |
-| checkout | [O] | [git checkout](##-**9)-branch,-checkout**) |
-| clone | [O] | [git clone](##-**14)-clone**) |
-| commit | [O] | [git commit](##-**5)-git commit**) |
-| config | [O] | [git config](##-**2)-config**) |
-| init | [O] | [git init](##-**1)-init**) |
-| log | [O] | [git log](##-**7)-log**) |
-| merge | [O] | [git merge](##-**12)-merge**) |
-| pull | [O] | [git pull](##-**10)-pull**) |
-| push | [O] | [git push](##-**6)-push**) |
-| rebase | [O] | [git rebase](##-**13)-rebase**) |
-| remote | [O] | [git remote](##-**3)-remote**) |
-| reset(reset --hard) | [O] | [git reset](##-**8)-reset**), [git reset --hard](###-**8.3)---hard**)  |
-| status | [O] | [git status](##-**4)-add, status**) |
-| tag | [O] | [git tag](##-**11)-tag**) |
+| add | [O] | [git add](##-**4-add, status**) |
+| branch | [O] | [git branch](##-**9-branch,-checkout**) |
+| checkout | [O] | [git checkout](##-**9-branch,-checkout**) |
+| clone | [O] | [git clone](##-**14-clone**) |
+| commit | [O] | [git commit](##-**5-git commit**) |
+| config | [O] | [git config](##-**2-config**) |
+| init | [O] | [git init](##-**1-init**) |
+| log | [O] | [git log](##-**7-log**) |
+| merge | [O] | [git merge](##-**12-merge**) |
+| pull | [O] | [git pull](##-**10-pull**) |
+| push | [O] | [git push](##-**6-push**) |
+| rebase | [O] | [git rebase](##-**13-rebase**) |
+| remote | [O] | [git remote](##-**3-remote**) |
+| reset(reset --hard) | [O] | [git reset](##-**8-reset**), [git reset --hard](###-**8.3---hard**)  |
+| status | [O] | [git status](##-**4-add, status**) |
+| tag | [O] | [git tag](##-**11-tag**) |
